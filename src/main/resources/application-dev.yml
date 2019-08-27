@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+jwt:
+  header: X-Token
+  expires_in: 180000 # 30 minutes
+  secret: queenvictoria
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/aswkj?useUnicode=true&characterEncoding=utf-8&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: password
+  #    schema:
+  #      - "classpath:db/schema.sql"
+  #    data:
+  #      - "classpath:db/data.sql"
+  #    initialization-mode: always
+  servlet:
+    multipart:
+      enabled: true
+      location: /Users/hzb/Desktop/asw-upload/tmp
+      file-size-threshold: 5MB
+      max-file-size: 20MB
+  redis:
+    host: localhost
+    # 连接超时时间（记得添加单位，Duration）
+    timeout: 10000ms
+    # Redis默认情况下有16个分片，这里配置具体使用的分片
+    # database: 0
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-wait: -1ms
+        # 连接池中的最大空闲连接 默认 8
+        max-idle: 8
+        # 连接池中的最小空闲连接 默认 0
+        min-idle: 0
+
+  cache:
+    # 一般来说是不用配置的，Spring Cache 会根据依赖的包自行装配
+    type: redis
+    redis:
+      time-to-live: 24h
+logging:
+  level:
+    com.aswkj.admin.api: debug
+
+custom:
+  upload:
+    local:
+      root-directory: /Users/hzb/Desktop/asw-upload
+      url-namespace: /images
+  domain: http://localhost:${server.port}
+
+

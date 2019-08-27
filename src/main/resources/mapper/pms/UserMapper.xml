@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aswkj.admin.api.module.pms.mapper.UserMapper">
+
+    <!-- 自定义查询列 -->
+    <sql id="CustomSelectColumn">
+        u.id AS user_id,
+        u.username AS user_username,
+        u.cipher AS user_cipher,
+        u.name AS user_name,
+        u.status AS user_status,
+        u.avatar_id AS user_avatar_id,
+        u.gender AS user_gender,
+        u.birthday AS user_birthday,
+        u.mobile AS user_mobile,
+        u.email AS user_email,
+        u.description AS user_description,
+        u.create_user AS user_create_user,
+        u.update_user AS user_update_user,
+        u.last_cipher_update_time AS user_last_cipher_update_time,
+        u.last_login_time AS user_last_login_time,
+        u.last_logout_time AS user_last_logout_time,
+        u.create_time AS user_create_time,
+        u.update_time AS user_update_time,
+    </sql>
+
+    <!-- 自定义查询映射结果 -->
+    <resultMap id="CustomBaseResultMap" type="com.aswkj.admin.api.module.pms.entity.User">
+        <id column="user_id" property="id"/>
+        <result column="user_username" property="username"/>
+        <result column="user_cipher" property="cipher"/>
+        <result column="user_name" property="name"/>
+        <result column="user_status" property="status"/>
+        <result column="user_avatar_id" property="avatarId"/>
+        <result column="user_gender" property="gender"/>
+        <result column="user_birthday" property="birthday"/>
+        <result column="user_mobile" property="mobile"/>
+        <result column="user_email" property="email"/>
+        <result column="user_description" property="description"/>
+        <result column="user_create_user" property="createUser"/>
+        <result column="user_update_user" property="updateUser"/>
+        <result column="user_last_cipher_update_time" property="lastCipherUpdateTime"/>
+        <result column="user_last_login_time" property="lastLoginTime"/>
+        <result column="user_last_logout_time" property="lastLogoutTime"/>
+        <result column="user_create_time" property="createTime"/>
+        <result column="user_update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.aswkj.admin.api.module.pms.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="cipher" property="cipher"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="avatar_id" property="avatarId"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="last_cipher_update_time" property="lastCipherUpdateTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, cipher, name, status, avatar_id, gender, birthday, mobile, email, create_user, update_user, last_cipher_update_time, last_login_time, create_time, update_time
+    </sql>
+
+    <resultMap id="UserDetailsModel" type="com.aswkj.admin.api.module.pms.model.UserDetailsModel"
+               extends="CustomBaseResultMap">
+        <collection property="roles" ofType="string">
+            <result column="role_name"/>
+        </collection>
+    </resultMap>
+    <select id="getUserDetailsModelByUserId" resultMap="UserDetailsModel">
+        SELECT
+            u.id AS user_id,
+            u.username AS user_username,
+            u.cipher AS user_cipher,
+            u.status AS user_status,
+            u.last_cipher_update_time AS user_last_cipher_update_time,
+            u.last_logout_time AS user_last_logout_time,
+            r.name AS role_name
+            FROM user u
+            LEFT OUTER JOIN user_role ur
+                ON u.id = ur.user_id
+            LEFT OUTER JOIN role r
+                ON ur.role_id = r.id
+            WHERE
+                u.id = #{userId}
+
+    </select>
+
+    <resultMap id="UserModel" type="com.aswkj.admin.api.module.pms.model.UserModel" extends="CustomBaseResultMap">
+        <result column="avatar_src" property="avatar"/>
+        <collection property="roles" ofType="string">
+            <result column="role_name"/>
+        </collection>
+        <collection property="roleCnNames" ofType="string">
+            <result column="role_cn_name"/>
+        </collection>
+    </resultMap>
+    <select id="getUserModelByUserId" resultMap="UserModel">
+         SELECT
+            u.id AS user_id,
+            u.username AS user_username,
+            u.name AS user_name,
+            u.status AS user_status,
+            u.avatar_id AS user_avatar_id,
+            a.src AS avatar_src,
+            u.gender AS user_gender,
+            u.birthday AS user_birthday,
+            u.mobile AS user_mobile,
+            u.email AS user_email,
+            u.description AS user_description,
+            r.name AS role_name,
+            r.cn_name AS role_cn_name
+            FROM user u
+            LEFT OUTER JOIN user_role ur
+                ON u.id = ur.user_id
+            LEFT OUTER JOIN role r
+                ON ur.role_id = r.id
+            LEFT OUTER JOIN avatar a
+                ON u.avatar_id = a.id
+            WHERE
+                u.id = #{userId}
+    </select>
+
+
+    <resultMap id="UserMediaModel" type="com.aswkj.admin.api.module.pms.model.UserMediaModel"
+               extends="CustomBaseResultMap">
+        <association property="avatar" resultMap="com.aswkj.admin.api.module.pms.mapper.AvatarMapper.BaseResultMap"
+                     columnPrefix="avatar_"/>
+    </resultMap>
+    <sql id="getUserAvatarSql">
+        SELECT
+            u.id AS user_id,
+            u.username AS user_username,
+            a.id AS avatar_id,
+            a.store_type AS avatar_store_type,
+            a.bucket AS avatar_bucket,
+            a.key AS avatar_key,
+            a.filename AS avatar_filename,
+            a.src AS avatar_src,
+            a.domain AS avatar_domain,
+            a.local_url_namespace AS avatar_local_url_namespace,
+            a.local_root_directory AS avatar_local_root_directory,
+            a.local_file_key AS avatar_local_file_key
+            FROM user u
+            LEFT OUTER JOIN avatar a
+                ON u.avatar_id = a.id
+            WHERE
+
+    </sql>
+    <select id="getUserAvatarByUserId" resultMap="UserMediaModel">
+        <include refid="getUserAvatarSql"/>
+        u.id = #{id}
+    </select>
+
+
+    <resultMap id="UserVo" type="com.aswkj.admin.api.module.pms.vo.UserVo" extends="CustomBaseResultMap">
+        <result column="role_ids" property="roleIds"/>
+        <result column="role_names" property="roleNames"/>
+        <result column="role_cn_names" property="roleCnNames"/>
+        <association property="avatar" resultMap="AvatarVo"
+                     columnPrefix="avatar_"/>
+    </resultMap>
+    <resultMap id="AvatarVo" type="com.aswkj.admin.api.module.pms.vo.AvatarVo"
+               extends="com.aswkj.admin.api.module.pms.mapper.AvatarMapper.BaseResultMap">
+    </resultMap>
+    <sql id="baseUserVoColumns">
+        u.username AS user_username,
+        u.name AS user_name,
+        u.status AS user_status,
+        u.gender AS user_gender,
+        u.birthday AS user_birthday,
+        u.mobile AS user_mobile,
+        u.email AS user_email,
+        u.description AS user_description,
+        u.last_login_time AS user_last_login_time,
+        u.create_time AS user_create_time,
+        GROUP_CONCAT(r.cn_name) AS role_cn_names
+     </sql>
+    <select id="getUserVoPage" resultMap="UserVo">
+        SELECT
+        u.id AS user_id,
+        GROUP_CONCAT(r.id) AS role_ids,
+        GROUP_CONCAT(r.name) AS role_names,
+        a.id AS avatar_id,
+        a.src AS avatar_src,
+        <include refid="baseUserVoColumns"/>
+        FROM USER u
+        LEFT OUTER JOIN user_role ur
+        ON u.id = ur.user_id
+        LEFT OUTER JOIN role r
+        ON ur.role_id = r.id
+        LEFT OUTER JOIN avatar a
+        ON u.avatar_id = a.id
+        ${ew.customSqlSegment}
+        GROUP BY u.id
+    </select>
+
+
+    <resultMap id="UserExcelVo" type="com.aswkj.admin.api.module.pms.vo.UserExcelVo" extends="CustomBaseResultMap">
+        <result column="role_cn_names" property="roleCnNames"/>
+    </resultMap>
+    <select id="getUserExcelVoList" resultMap="UserExcelVo">
+        SELECT
+        <include refid="baseUserVoColumns"/>
+        FROM USER u
+        LEFT OUTER JOIN user_role ur
+        ON u.id = ur.user_id
+        LEFT OUTER JOIN role r
+        ON ur.role_id = r.id
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="getUserVoCount" resultType="long">
+        SELECT
+           COUNT(DISTINCT u.id)
+        FROM user u
+        LEFT OUTER JOIN user_role ur
+                ON u.id = ur.user_id
+        LEFT OUTER JOIN role r
+                ON ur.role_id = r.id
+        LEFT OUTER JOIN avatar a
+                ON u.avatar_id = a.id
+        ${ew.customSqlSegment}
+    </select>
+
+</mapper>

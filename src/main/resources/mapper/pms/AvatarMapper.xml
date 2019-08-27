@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aswkj.admin.api.module.pms.mapper.AvatarMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.aswkj.admin.api.module.pms.entity.Avatar">
+        <id column="id" property="id" />
+        <result column="store_type" property="storeType" />
+        <result column="bucket" property="bucket" />
+        <result column="key" property="key" />
+        <result column="filename" property="filename" />
+        <result column="src" property="src" />
+        <result column="domain" property="domain" />
+        <result column="local_url_namespace" property="localUrlNamespace" />
+        <result column="local_root_directory" property="localRootDirectory" />
+        <result column="local_file_key" property="localFileKey" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, store_type, bucket, key, filename, src, domain, local_url_namespace, local_root_directory, local_file_key, create_user, update_user, create_time, update_time
+    </sql>
+
+</mapper>

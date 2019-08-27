@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  swagger:
+    enabled: true
+    title: aswkj-admin-api
+    description: 艾斯维管理后台api接口
+    version: 1.0.0
+    contact:
+      name: Hzb
+      email: hzb879@qq.com
+    global-operation-parameters:
+      - description: Token信息,必填项
+        modelRef: string
+        name: Authorization
+        parameterType: header
+        required: true
+    groups:
+      auth-api:
+        base-package: com.aswkj.admin.api.common
+      pms-api:
+        base-package: com.aswkj.admin.api.module.pms
+    security:
+      username: admin
+      password: 123
+      filter-plugin: false
+  cache:
+    # 一般来说是不用配置的，Spring Cache 会根据依赖的包自行装配
+    type: redis
+  activiti:
+    database-schema-update: true
+    check-process-definitions: false
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-enums-package: com.aswkj.admin.api.common.enums
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+#  type-aliases-package: com.aswkj.admin.api.module.*.entity
+
