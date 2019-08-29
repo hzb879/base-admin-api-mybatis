@@ -1,5 +1,6 @@
 package com.aswkj.admin.api.config.security.auth;
 
+import cn.hutool.core.util.StrUtil;
 import com.aswkj.admin.api.common.enums.ResponseMsgEnum;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.config.exception.UserStatusException;
@@ -46,7 +47,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     try {
       String authToken = tokenHelper.getToken(request);
-      if (Objects.nonNull(authToken)) {
+      if (StrUtil.isNotBlank(authToken)) {
         Claims claims = tokenHelper.getAllClaimsFromToken(authToken);
         String userId = claims.getSubject();
         if (Objects.nonNull(userId)) {

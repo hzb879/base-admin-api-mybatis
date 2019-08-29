@@ -161,7 +161,7 @@ public class HttpUtil {
   public static void responseJson(HttpServletResponse response, Object responseData) throws IOException {
     response.setContentType("application/json;charset=UTF-8");
     try (PrintWriter writer = response.getWriter()) {
-      writer.write(JsonUtil.createJson(responseData));
+      writer.write(JsonUtil.createJsonStr(responseData));
     }
   }
 

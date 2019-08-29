@@ -2,7 +2,6 @@ package com.aswkj.admin.api.config.security;
 
 
 import com.aswkj.admin.api.config.security.auth.JwtUserDetailsService;
-import com.aswkj.admin.api.config.security.auth.RestAuthenticationEntryPoint;
 import com.aswkj.admin.api.config.security.auth.TokenAuthenticationFilter;
 import com.aswkj.admin.api.config.security.helper.TokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private JwtUserDetailsService jwtUserDetailsService;
 
-  @Autowired
-  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+//  @Autowired
+//  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
   @Autowired
   private TokenHelper tokenHelper;
@@ -69,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             // don't create session
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+//            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
             .authorizeRequests()
             .anyRequest().authenticated().and()
@@ -102,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.map"
     ).antMatchers("/auth/login");
 
-    // Allow swagger to be accessed without authentication
+    // Allow swagger to be accessed without authentication and other public resource
     web.ignoring().antMatchers(
             "/v2/api-docs",
             "/swagger-resources/**",
@@ -110,7 +109,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/configuration/**",
             "/webjars/**",
             "/v3/swagger*/**",
-            "/public");
+            "/public",
+            "/error");
 
   }
 

@@ -2,17 +2,19 @@ package com.aswkj.admin.api.common.controller;
 
 
 import com.aswkj.admin.api.common.model.LocalStoreModel;
+import com.aswkj.admin.api.common.model.QiniuImageStoreModel;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.common.service.LocalFileUploadService;
+import com.aswkj.admin.api.common.service.QiniuUploadService;
+import com.aswkj.admin.api.config.DateTimeConfig;
 import com.aswkj.admin.api.module.pms.service.IAvatarService;
 import com.aswkj.admin.api.module.pms.service.IUserService;
+import com.aswkj.admin.api.util.SpringUtil;
+import com.qiniu.common.QiniuException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
@@ -27,6 +29,9 @@ public class UploadController {
   LocalFileUploadService localFileUploadService;
 
   @Autowired
+  QiniuUploadService qiniuUploadService;
+
+  @Autowired
   IAvatarService avatarService;
 
   @Autowired
@@ -34,8 +39,10 @@ public class UploadController {
 
   @ApiOperation(value = "七牛上传文件", notes = "备注")
   @PostMapping("/qiniu")
-  public ResponseData uploadQiniu() {
-    return null;
+  public ResponseData<QiniuImageStoreModel> uploadQiniu(@RequestParam("file") MultipartFile file,
+                                                        @RequestParam(value = "bucket", required = false) String bucket,
+                                                        @RequestParam(value = "namespace", required = false) String namespace) {
+    return ResponseData.success(qiniuUploadService.uploadMultipartFile(bucket, namespace, file));
   }
 
   @ApiOperation(value = "本地上传用户自己头像", notes = "备注")
@@ -45,6 +52,15 @@ public class UploadController {
     LocalStoreModel localStoreModel = localFileUploadService.upload(file);
     userService.saveAvatarAndUpdateUserAvatarByUserId(principal.getName(), localStoreModel);
     return ResponseData.success(localStoreModel);
+  }
+
+
+  @ApiOperation(value = "本地上传用户自己头像", notes = "备注")
+  @GetMapping("/test")
+  public ResponseData test() throws QiniuException {
+    qiniuUploadService.resetBucketSettingMap();
+    System.out.println(SpringUtil.getBean(DateTimeConfig.class));
+    return ResponseData.success("111");
   }
 
 

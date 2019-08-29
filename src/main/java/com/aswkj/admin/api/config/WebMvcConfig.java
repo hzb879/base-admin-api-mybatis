@@ -26,9 +26,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     registry.addMapping("/**");
   }
 
+
+  /**
+   * 本地上传路径映射
+   *
+   * @param registry
+   */
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
     urlNamespace = StrUtil.addPrefixIfNot(urlNamespace, "/");
     urlNamespace = StrUtil.addSuffixIfNot(urlNamespace, "/");
     rootDirectory = StrUtil.addSuffixIfNot(rootDirectory, "/");

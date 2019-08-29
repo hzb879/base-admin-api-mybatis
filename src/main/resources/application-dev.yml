@@ -22,6 +22,8 @@ spring:
       location: /Users/hzb/Desktop/asw-upload/tmp
       file-size-threshold: 5MB
       max-file-size: 20MB
+      max-request-size: 50MB
+
   redis:
     host: localhost
     # 连接超时时间（记得添加单位，Duration）
@@ -49,10 +51,13 @@ logging:
     com.aswkj.admin.api: debug
 
 custom:
+  domain: http://localhost:${server.port}
   upload:
+    maxFileSize: 20MB
     local:
       root-directory: /Users/hzb/Desktop/asw-upload
       url-namespace: /images
-  domain: http://localhost:${server.port}
-
-
+    qiniu:
+      accessKey:
+      secretKey:
+      bucket: test

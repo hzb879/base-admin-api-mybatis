@@ -28,8 +28,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 
 @Configuration
-@AutoConfigureAfter(RedisAutoConfiguration.class)
 @EnableCaching
+@AutoConfigureAfter(RedisAutoConfiguration.class)
 @ConfigurationProperties(prefix = "spring.cache.redis")
 public class RedisConfig {
 
