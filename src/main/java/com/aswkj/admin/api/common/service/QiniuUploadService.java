@@ -42,6 +42,10 @@ public interface QiniuUploadService {
 
   void clearQiniuBucketInfoModelMapCache();
 
+  void deleteFile(String bucket, String key);
+
+  void deleteFile(String key);
+
   void resetBucketSettingMap() throws QiniuException;
 
 }

@@ -20,6 +20,7 @@ import com.qiniu.storage.model.BucketInfo;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,6 +40,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingBean, ApplicationRunner {
 
   private StringMap putPolicy;
@@ -192,6 +194,24 @@ public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingB
   }
 
   @Override
+  public void deleteFile(String bucket, String key) {
+    if (StrUtil.isBlank(bucket)) {
+      bucket = default_bucket;
+    }
+    BucketManager bucketManager = getBucketManager(bucket);
+    try {
+      bucketManager.delete(bucket, key);
+    } catch (QiniuException e) {
+      log.error("删除文件{}:{} 失败:{}", bucket, key, e);
+    }
+  }
+
+  @Override
+  public void deleteFile(String key) {
+    deleteFile(null, key);
+  }
+
+  @Override
   public synchronized void resetBucketSettingMap() throws QiniuException {
     QiniuUploadService _this = getSelf();
     _this.clearQiniuBucketInfoModelMapCache();
@@ -268,6 +288,18 @@ public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingB
 
     return bucketSetting.getUploadManager();
   }
+
+  private BucketManager getBucketManager(String bucket) {
+    if (StrUtil.isBlank(bucket)) {
+      bucket = default_bucket;
+    }
+    BucketSetting bucketSetting = bucketSettingMap.get(bucket);
+    if (Objects.isNull(bucketSetting)) {
+      throw new CustomException(String.format("%s 空间名不存在！", bucket));
+    }
+    return bucketSetting.getBucketManager();
+  }
+
 
   private String getUploadKey(String namespace, String key) {
     if (StrUtil.isNotBlank(namespace)) {

@@ -58,6 +58,6 @@ custom:
       root-directory: /Users/hzb/Desktop/asw-upload
       url-namespace: /images
     qiniu:
-      accessKey:
-      secretKey:
+      accessKey: Pc0NAVauMyXwEjRHaUGMWcw9qg4WHuAUoxjNqOu1
+      secretKey: N71gxeHiRhkxn2wRoP7Y1bUH_p55WXzBShGva8fL
       bucket: test

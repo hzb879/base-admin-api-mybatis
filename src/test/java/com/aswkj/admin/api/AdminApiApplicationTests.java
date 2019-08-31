@@ -1,7 +1,6 @@
 package com.aswkj.admin.api;
 
-import com.aswkj.admin.api.module.pms.entity.User;
-import com.aswkj.admin.api.module.pms.entity.UserRole;
+import com.aswkj.admin.api.common.service.QiniuUploadService;
 import com.aswkj.admin.api.module.pms.service.IRoleService;
 import com.aswkj.admin.api.module.pms.service.IUserRoleService;
 import com.aswkj.admin.api.module.pms.service.IUserService;
@@ -24,6 +23,10 @@ public class AdminApiApplicationTests {
   @Autowired
   IUserRoleService userRoleService;
 
+  @Autowired
+  QiniuUploadService qiniuUploadService;
+
+
 //  @Test
 //  public void addAdminUser() {
 //    userService.registerUser(new User()
@@ -40,26 +43,27 @@ public class AdminApiApplicationTests {
 //  }
 //
 
-  @Test
-  public void addUserRole() {
-    userRoleService.save(new UserRole().setUserId("1160076551038189569").setRoleId("1160077148147707906"));
-    userRoleService.save(new UserRole().setUserId("1160076551038189569").setRoleId("1160079145311682561"));
-    userRoleService.save(new UserRole().setUserId("1160083990349357058").setRoleId("1160079145311682561"));
-  }
+//  @Test
+//  public void addUserRole() {
+//    userRoleService.save(new UserRole().setUserId("1160076551038189569").setRoleId("1160077148147707906"));
+//    userRoleService.save(new UserRole().setUserId("1160076551038189569").setRoleId("1160079145311682561"));
+//    userRoleService.save(new UserRole().setUserId("1160083990349357058").setRoleId("1160079145311682561"));
+//  }
 
 
-  @Test
-  public void updateUser() {
+//  @Test
+//  public void updateUser() {
 //    User user = new User();
-//    user.setMobile("14899995555");
-//    userService.update(user, new UpdateWrapper<User>().eq("username", "test4"));
-//    userService.updateById(new User().setId(1160888333667483649L).setLastLoginTime(LocalDateTime.now()));
-    User user = new User();
-    user.setDescription("嘻嘻嘻");
-    user.setMobile("119");
-    user.setId("1163348493124018178");
+//    user.setDescription("嘻嘻嘻");
+//    user.setMobile("119");
+//    user.setId("1163348493124018178");
 //    userService.lambdaUpdate().eq(User::getUsername, "test00").update(user);
-    userService.updateById(user);
+//    userService.updateById(user);
+//  }
+
+  @Test
+  public void testDeleteFile() {
+    qiniuUploadService.deleteFile("test4", "c0a78c538a8343759ed6a6a01f9d66cc");
   }
 
   @Test
