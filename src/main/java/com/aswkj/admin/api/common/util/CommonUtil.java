@@ -2,6 +2,9 @@ package com.aswkj.admin.api.common.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.EnumUtil;
+import cn.hutool.core.util.StrUtil;
+import com.aswkj.admin.api.config.exception.AlertException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +24,23 @@ public class CommonUtil {
     return result;
   }
 
+  public static Object getEnumFieldValue(Class enumClazz, String likeValue, String fieldName) {
+    Enum obj = EnumUtil.likeValueOf(enumClazz, likeValue);
+    return BeanUtil.getFieldValue(obj, fieldName);
+  }
 
+
+  public static void isTrueAlertAssert(boolean expression, String errMsg, Object... params) {
+    if (!expression) {
+      throw new AlertException(StrUtil.format(errMsg, params));
+    }
+  }
+
+
+  public static void isFalseAlertAssert(boolean expression, String errMsg, Object... params) {
+    if (expression) {
+      throw new AlertException(StrUtil.format(errMsg, params));
+    }
+  }
+  
 }

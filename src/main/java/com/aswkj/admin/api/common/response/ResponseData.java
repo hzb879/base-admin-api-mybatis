@@ -38,6 +38,11 @@ public class ResponseData<T> implements Serializable {
     return new ResponseData<>(ResponseMsgEnum.FAIL.getCode(), msg, msg);
   }
 
+  public static ResponseData<String> failAlertMsg(String msg) {
+    return new ResponseData<>(ResponseMsgEnum.FAIL_ALERT.getCode(), msg, msg);
+  }
+
+
   public static ResponseData<String> successSign() {
     ResponseMsgEnum success = ResponseMsgEnum.SUCCESS;
     return new ResponseData<>(success.getCode(), success.getMsg(), success.getMsg());

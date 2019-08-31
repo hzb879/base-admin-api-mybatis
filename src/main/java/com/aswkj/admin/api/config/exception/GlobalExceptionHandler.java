@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
 
   /**
-   * 捕捉自定义异常
+   * 捕捉业务自定义异常
    *
    * @param e
    * @return
@@ -28,6 +28,18 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(CustomException.class)
   public ResponseData<String> customException(CustomException e) {
     return ResponseData.failMsg(e.getMessage());
+  }
+
+
+  /**
+   * 捕捉前端alert异常
+   *
+   * @param e
+   * @return
+   */
+  @ExceptionHandler(AlertException.class)
+  public ResponseData<String> alertException(AlertException e) {
+    return ResponseData.failAlertMsg(e.getMessage());
   }
 
 

@@ -1,6 +1,7 @@
 package com.aswkj.admin.api.common.controller;
 
 
+import com.aswkj.admin.api.common.enums.QiniuRegionEnum;
 import com.aswkj.admin.api.common.model.LocalStoreModel;
 import com.aswkj.admin.api.common.model.QiniuImageStoreModel;
 import com.aswkj.admin.api.common.response.ResponseData;
@@ -11,8 +12,12 @@ import com.aswkj.admin.api.module.pms.service.IAvatarService;
 import com.aswkj.admin.api.module.pms.service.IUserService;
 import com.aswkj.admin.api.util.SpringUtil;
 import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +27,7 @@ import java.security.Principal;
 @Api(tags = "1.0.0", value = "文件上传")
 @RestController
 @RequestMapping(value = "/upload")
+@Slf4j
 public class UploadController {
 
 
@@ -37,6 +43,9 @@ public class UploadController {
   @Autowired
   IUserService userService;
 
+  @Autowired
+  BucketManager bucketManager;
+
   @ApiOperation(value = "七牛上传文件", notes = "备注")
   @PostMapping("/qiniu")
   public ResponseData<QiniuImageStoreModel> uploadQiniu(@RequestParam("file") MultipartFile file,
@@ -44,6 +53,30 @@ public class UploadController {
                                                         @RequestParam(value = "namespace", required = false) String namespace) {
     return ResponseData.success(qiniuUploadService.uploadMultipartFile(bucket, namespace, file));
   }
+
+
+  @Data
+  private static class BucketModel {
+    private String bucket;
+    private QiniuRegionEnum region;
+  }
+
+  @ApiOperation(value = "添加一个七牛存储空间", notes = "备注")
+  @PostMapping("/qiniu/bucket/create")
+  public ResponseData<String> createQiniuBucket(@RequestBody BucketModel bucketModel) throws QiniuException {
+    Response response = bucketManager.createBucket(bucketModel.getBucket(), bucketModel.getRegion().getDbValue());
+    qiniuUploadService.resetBucketSettingMap();
+    return ResponseData.success(response.getInfo());
+  }
+
+//  @ApiOperation(value = "删除一个七牛存储空间", notes = "备注")
+//  @PostMapping("/qiniu/bucket/remove")
+//  public ResponseData<String> removeQiniuBucket(@RequestParam String bucket) throws QiniuException {
+//    Response response = bucketManager.delete(bucket, null);
+//    qiniuUploadService.resetBucketSettingMap();
+//    return ResponseData.success(response.getInfo());
+//  }
+
 
   @ApiOperation(value = "本地上传用户自己头像", notes = "备注")
   @PostMapping("/local/own-avatar")

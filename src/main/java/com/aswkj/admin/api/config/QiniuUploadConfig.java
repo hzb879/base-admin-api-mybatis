@@ -1,5 +1,6 @@
 package com.aswkj.admin.api.config;
 
+import com.aswkj.admin.api.common.enums.QiniuRegionEnum;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Region;
@@ -35,12 +36,13 @@ public class QiniuUploadConfig {
   public Map<String, RegionManager> qiniuRegionManagerMap(Auth auth) {
     Map<String, RegionManager> regionManagerMap = new HashMap<>();
 
+
     Map<String, com.qiniu.storage.Configuration> configMap = new HashMap<>();
-    configMap.put("z0", new com.qiniu.storage.Configuration(Region.huadong()));
-    configMap.put("z1", new com.qiniu.storage.Configuration(Region.huabei()));
-    configMap.put("z2", new com.qiniu.storage.Configuration(Region.huanan()));
-    configMap.put("na0", new com.qiniu.storage.Configuration(Region.beimei()));
-    configMap.put("as0", new com.qiniu.storage.Configuration(Region.xinjiapo()));
+    configMap.put(QiniuRegionEnum.huadong.getDbValue(), new com.qiniu.storage.Configuration(Region.huadong()));
+    configMap.put(QiniuRegionEnum.huabei.getDbValue(), new com.qiniu.storage.Configuration(Region.huabei()));
+    configMap.put(QiniuRegionEnum.huanan.getDbValue(), new com.qiniu.storage.Configuration(Region.huanan()));
+    configMap.put(QiniuRegionEnum.beimei.getDbValue(), new com.qiniu.storage.Configuration(Region.beimei()));
+    configMap.put(QiniuRegionEnum.xinjiapo.getDbValue(), new com.qiniu.storage.Configuration(Region.xinjiapo()));
 
     for (String region : configMap.keySet()) {
       RegionManager regionManager = new RegionManager();

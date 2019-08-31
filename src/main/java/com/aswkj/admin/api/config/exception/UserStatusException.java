@@ -1,7 +1,8 @@
 package com.aswkj.admin.api.config.exception;
 
+
 /**
- * 服务（业务）异常如“ 账号或密码错误 ”，该异常只做INFO级别的日志记录 @see WebMvcConfigurer
+ * 用户状态异常， 不合法则不允许登陆
  */
 public class UserStatusException extends RuntimeException {
 

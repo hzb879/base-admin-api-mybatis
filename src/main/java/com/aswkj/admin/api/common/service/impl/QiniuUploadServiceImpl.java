@@ -143,15 +143,10 @@ public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingB
 
   @Override
   public QiniuImageStoreModel uploadMultipartFile(String bucket, String namespace, MultipartFile file) {
-    if (file.isEmpty()) {
-      throw new CustomException("文件内容为空");
-    }
-    String fileName = file.getOriginalFilename();
     String key = IdUtil.fastSimpleUUID();
-    File localFile = FileUtil.file(fileTempPath, key, fileName);
-    localFile.getParentFile().mkdir();
+    File localFile = null;
     try {
-      file.transferTo(localFile);
+      localFile = SpringUtil.transferMultipartFileToLocalTmpFile(file, fileTempPath, key);
       return this.uploadFile(bucket, namespace, key, localFile);
     } catch (IOException e) {
       e.printStackTrace();
@@ -174,7 +169,7 @@ public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingB
   }
 
   @Override
-  @Cacheable(cacheNames = "qiniu", key = "'bucket_info'", cacheManager = CacheManagerConstant.REDIS_30_MINUTES)
+  @Cacheable(cacheNames = "qiniu", key = "'bucket_info'", cacheManager = CacheManagerConstant.REDIS_INFINITE)
   public Map<String, QiniuBucketInfoModel> getQiniuBucketInfoModelMap() throws QiniuException {
 
     Map<String, QiniuBucketInfoModel> map = new HashMap<>();
@@ -192,7 +187,7 @@ public class QiniuUploadServiceImpl implements QiniuUploadService, InitializingB
   }
 
   @Override
-  @CacheEvict(cacheNames = "qiniu", key = "'bucket_info'", cacheManager = CacheManagerConstant.REDIS_30_MINUTES)
+  @CacheEvict(cacheNames = "qiniu", key = "'bucket_info'", cacheManager = CacheManagerConstant.REDIS_INFINITE)
   public void clearQiniuBucketInfoModelMapCache() {
   }
 

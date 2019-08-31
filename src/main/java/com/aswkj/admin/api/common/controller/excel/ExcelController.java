@@ -2,6 +2,7 @@ package com.aswkj.admin.api.common.controller.excel;
 
 import com.aswkj.admin.api.common.constant.Constants;
 import com.aswkj.admin.api.common.enums.excel.UserExcelEnum;
+import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.common.util.CommonExcelUtil;
 import com.aswkj.admin.api.module.pms.service.IUserService;
 import com.aswkj.admin.api.module.pms.vo.UserExcelVo;
@@ -10,13 +11,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Api(tags = "1.0.0", value = "excel文件处理")
@@ -66,7 +66,16 @@ public class ExcelController {
     List<UserExcelVo> userExcelVoList = userService.getUserExcelVoList(queryWrapper);
 
     CommonExcelUtil.exportExcel(response, UserExcelEnum.class, userParams.fieldNames, userExcelVoList, "用户");
-
-
   }
+
+  @ApiOperation(value = "上传用户excel列表", notes = "备注")
+  @PostMapping("/user/upload")
+  public ResponseData<List<UserExcelVo>> userUpload(@RequestParam("file") MultipartFile file) throws IOException {
+    try (InputStream in = file.getInputStream()) {
+      List<UserExcelVo> userExcelVos = CommonExcelUtil.importExcel(in, UserExcelVo.class, UserExcelEnum.class);
+      return ResponseData.success(userExcelVos);
+    }
+  }
+
+
 }
