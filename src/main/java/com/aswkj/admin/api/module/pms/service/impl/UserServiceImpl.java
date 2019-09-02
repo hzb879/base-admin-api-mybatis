@@ -116,6 +116,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
   }
 
   @Override
+  public User getAuthInfoByUserId(String userId) {
+    return userMapper.getAuthInfoByUserId(userId);
+  }
+
+  @Override
   @CacheEvict(cacheNames = CacheNameConstant.USER_AUTH, key = "#userId")
   public void changeCipher(String userId, String oldCipher, String newCipher) {
 
@@ -142,11 +147,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             .setId(userId));
   }
 
-//  @Override
-//  public UserDetailsModel getUserDetailsModelByUsername(String username) {
-//    return userMapper.getUserDetailsModelByUsername(username);
-//  }
-
   @Override
   @Cacheable(cacheNames = CacheNameConstant.USER_AUTH, key = "#userId")
   public UserDetailsModel getUserDetailsModelByUserId(String userId) {
@@ -157,22 +157,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
   public UserModel getUserModelByUserId(String userId) {
     return userMapper.getUserModelByUserId(userId);
   }
-
-//  @Override
-//  public UserModel getUserModelByUsername(String username) {
-//    return userMapper.getUserModelByUsername(username);
-//  }
-
-//  @Override
-//  @Transactional
-//  public void saveAvatarAndUpdateUserAvatarByUsername(String username, LocalStoreModel localStoreModel) {
-//    UserMediaModel userMediaModel = userMapper.getUserAvatarByUsername(username);
-//    Avatar avatar = handleAvatar(localStoreModel, userMediaModel);
-//    //更新用户头像id
-//    this.lambdaUpdate()
-//            .eq(User::getUsername, username)
-//            .update(new User().setAvatarId(avatar.getId()));
-//  }
 
   @Override
   @Transactional

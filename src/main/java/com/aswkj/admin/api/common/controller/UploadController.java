@@ -7,10 +7,8 @@ import com.aswkj.admin.api.common.model.QiniuImageStoreModel;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.common.service.LocalFileUploadService;
 import com.aswkj.admin.api.common.service.QiniuUploadService;
-import com.aswkj.admin.api.config.DateTimeConfig;
 import com.aswkj.admin.api.module.pms.service.IAvatarService;
 import com.aswkj.admin.api.module.pms.service.IUserService;
-import com.aswkj.admin.api.util.SpringUtil;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -85,15 +83,6 @@ public class UploadController {
     LocalStoreModel localStoreModel = localFileUploadService.upload(file);
     userService.saveAvatarAndUpdateUserAvatarByUserId(principal.getName(), localStoreModel);
     return ResponseData.success(localStoreModel);
-  }
-
-
-  @ApiOperation(value = "本地上传用户自己头像", notes = "备注")
-  @GetMapping("/test")
-  public ResponseData test() throws QiniuException {
-    qiniuUploadService.resetBucketSettingMap();
-    System.out.println(SpringUtil.getBean(DateTimeConfig.class));
-    return ResponseData.success("111");
   }
 
 

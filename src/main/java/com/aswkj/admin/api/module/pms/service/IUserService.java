@@ -27,19 +27,13 @@ public interface IUserService extends IService<User> {
 
   User getAuthInfoByUsername(String username);
 
+  User getAuthInfoByUserId(String userId);
+
   void changeCipher(String userId, String oldCipher, String newCipher);
 
   void changeCipher(String userId, String newCipher);
 
   void changeUsernameAndCipher(String userId, String newUserName, String newCipher);
-
-//  /**
-//   * 获取带有角色信息的userDetails,用于认证授权
-//   *
-//   * @param username
-//   * @return
-//   */
-//  UserDetailsModel getUserDetailsModelByUsername(String username);
 
   /**
    * 获取带有角色信息的userDetails,用于认证授权
@@ -56,14 +50,6 @@ public interface IUserService extends IService<User> {
    * @return
    */
   UserModel getUserModelByUserId(String userId);
-
-  /**
-   * 保存并修改头像信息
-   *
-   * @param username        用户名
-   * @param localStoreModel
-   */
-//  void saveAvatarAndUpdateUserAvatarByUsername(String username, LocalStoreModel localStoreModel);
 
   /**
    * 保存并修改头像信息

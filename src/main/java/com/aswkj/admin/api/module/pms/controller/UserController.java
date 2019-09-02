@@ -22,8 +22,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -50,6 +52,10 @@ public class UserController {
 
   @Autowired
   RedisTemplate redisTemplate;
+
+  @Lazy
+  @Autowired
+  PasswordEncoder passwordEncoder;
 
   @ApiOperation(value = "获取用户字典信息", notes = "备注")
   @GetMapping("/dict")
@@ -173,6 +179,14 @@ public class UserController {
   @GetMapping("/own-info")
   public ResponseData<UserModel> getOwnInfo(Principal principal) {
     return ResponseData.success(userService.getUserModelByUserId(principal.getName()));
+  }
+
+  @ApiOperation(value = "通过密码认证自己", notes = "备注")
+  @PostMapping("/auth")
+  public ResponseData auth(Principal principal, @RequestParam("password") String password) {
+    User user = userService.getAuthInfoByUserId(principal.getName());
+    Assert.isTrue(passwordEncoder.matches(password, user.getCipher()), "密码错误");
+    return ResponseData.successSign();
   }
 
   @ApiOperation(value = "修改自己密码", notes = "备注")
