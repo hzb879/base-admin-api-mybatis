@@ -26,6 +26,7 @@ public class MybatisPlusConfig {
 
   /**
    * 表字段自动填充配置
+   *
    * @return
    */
   @Bean
@@ -34,7 +35,7 @@ public class MybatisPlusConfig {
       @Override
       public void insertFill(MetaObject metaObject) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(Objects.nonNull(authentication)) {
+        if (Objects.nonNull(authentication)) {
           UserDetailsModel userDetails = (UserDetailsModel) authentication.getPrincipal();
           String id = userDetails.getId();
           this.setFieldValByName("createUser", id, metaObject);
@@ -49,7 +50,7 @@ public class MybatisPlusConfig {
       public void updateFill(MetaObject metaObject) {
         this.setFieldValByName("updateTime", LocalDateTime.now(), metaObject);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(Objects.nonNull(authentication)) {
+        if (Objects.nonNull(authentication)) {
           UserDetailsModel userDetails = (UserDetailsModel) authentication.getPrincipal();
           this.setFieldValByName("updateUser", userDetails.getId(), metaObject);
         }
@@ -62,7 +63,7 @@ public class MybatisPlusConfig {
    * SQL执行效率插件
    */
   @Bean
-  @Profile({"dev","test"})// 设置 dev test 环境开启
+  @Profile({"dev", "test"})// 设置 dev test 环境开启
   public PerformanceInterceptor performanceInterceptor() {
     PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
     return performanceInterceptor;

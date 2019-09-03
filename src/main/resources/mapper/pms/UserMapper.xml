@@ -2,27 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aswkj.admin.api.module.pms.mapper.UserMapper">
 
-    <!-- 自定义查询列 -->
-    <sql id="CustomSelectColumn">
-        u.id AS user_id,
-        u.username AS user_username,
-        u.cipher AS user_cipher,
-        u.name AS user_name,
-        u.status AS user_status,
-        u.avatar_id AS user_avatar_id,
-        u.gender AS user_gender,
-        u.birthday AS user_birthday,
-        u.mobile AS user_mobile,
-        u.email AS user_email,
-        u.description AS user_description,
-        u.create_user AS user_create_user,
-        u.update_user AS user_update_user,
-        u.last_cipher_update_time AS user_last_cipher_update_time,
-        u.last_login_time AS user_last_login_time,
-        u.last_logout_time AS user_last_logout_time,
-        u.create_time AS user_create_time,
-        u.update_time AS user_update_time,
-    </sql>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.aswkj.admin.api.module.pms.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="cipher" property="cipher"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="avatar_id" property="avatarId"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="last_cipher_update_time" property="lastCipherUpdateTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
 
     <!-- 自定义查询映射结果 -->
     <resultMap id="CustomBaseResultMap" type="com.aswkj.admin.api.module.pms.entity.User">
@@ -46,29 +44,31 @@
         <result column="user_update_time" property="updateTime"/>
     </resultMap>
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.aswkj.admin.api.module.pms.entity.User">
-        <id column="id" property="id"/>
-        <result column="username" property="username"/>
-        <result column="cipher" property="cipher"/>
-        <result column="name" property="name"/>
-        <result column="status" property="status"/>
-        <result column="avatar_id" property="avatarId"/>
-        <result column="gender" property="gender"/>
-        <result column="birthday" property="birthday"/>
-        <result column="mobile" property="mobile"/>
-        <result column="email" property="email"/>
-        <result column="create_user" property="createUser"/>
-        <result column="update_user" property="updateUser"/>
-        <result column="last_cipher_update_time" property="lastCipherUpdateTime"/>
-        <result column="last_login_time" property="lastLoginTime"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-    </resultMap>
-
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, username, cipher, name, status, avatar_id, gender, birthday, mobile, email, create_user, update_user, last_cipher_update_time, last_login_time, create_time, update_time
+    </sql>
+
+    <!-- 自定义查询结果列 -->
+    <sql id="Custom_Column_List">
+        u.id AS user_id,
+        u.username AS user_username,
+        u.cipher AS user_cipher,
+        u.name AS user_name,
+        u.status AS user_status,
+        u.avatar_id AS user_avatar_id,
+        u.gender AS user_gender,
+        u.birthday AS user_birthday,
+        u.mobile AS user_mobile,
+        u.email AS user_email,
+        u.description AS user_description,
+        u.create_user AS user_create_user,
+        u.update_user AS user_update_user,
+        u.last_cipher_update_time AS user_last_cipher_update_time,
+        u.last_login_time AS user_last_login_time,
+        u.last_logout_time AS user_last_logout_time,
+        u.create_time AS user_create_time,
+        u.update_time AS user_update_time,
     </sql>
 
     <resultMap id="UserDetailsModel" type="com.aswkj.admin.api.module.pms.model.UserDetailsModel"

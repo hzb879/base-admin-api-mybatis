@@ -1,7 +1,7 @@
 package com.aswkj.admin.api.config.exception;
 
-import com.aswkj.admin.api.common.enums.ResponseMsgEnum;
 import com.aswkj.admin.api.common.response.ResponseData;
+import com.aswkj.admin.api.common.response.ResponseMsgEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

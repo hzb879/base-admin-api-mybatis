@@ -1,6 +1,6 @@
 package com.aswkj.admin.api.module.pms.model;
 
-import com.aswkj.admin.api.common.enums.UserStatusEnum;
+import com.aswkj.admin.api.module.pms.enums.UserStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

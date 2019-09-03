@@ -21,7 +21,7 @@ spring:
       enabled: true
       location: /Users/hzb/Desktop/asw-upload/tmp
       file-size-threshold: 5MB
-      max-file-size: 20MB
+      max-file-size: ${custom.upload.maxFileSize}
       max-request-size: 50MB
 
   redis:

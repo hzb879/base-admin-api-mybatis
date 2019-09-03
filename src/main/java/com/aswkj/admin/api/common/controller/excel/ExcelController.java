@@ -1,7 +1,7 @@
 package com.aswkj.admin.api.common.controller.excel;
 
 import com.aswkj.admin.api.common.constant.Constants;
-import com.aswkj.admin.api.common.enums.excel.UserExcelEnum;
+import com.aswkj.admin.api.module.pms.enums.excel.UserExcelEnum;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.common.util.CommonExcelUtil;
 import com.aswkj.admin.api.module.pms.service.IUserService;

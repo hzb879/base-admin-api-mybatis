@@ -1,7 +1,7 @@
 package com.aswkj.admin.api.module.pms.entity;
 
-import com.aswkj.admin.api.common.enums.GenderEnum;
-import com.aswkj.admin.api.common.enums.UserStatusEnum;
+import com.aswkj.admin.api.module.pms.enums.GenderEnum;
+import com.aswkj.admin.api.module.pms.enums.UserStatusEnum;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

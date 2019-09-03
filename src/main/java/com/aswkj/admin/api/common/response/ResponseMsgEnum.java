@@ -1,4 +1,4 @@
-package com.aswkj.admin.api.common.enums;
+package com.aswkj.admin.api.common.response;
 
 /**
  * 响应信息枚举

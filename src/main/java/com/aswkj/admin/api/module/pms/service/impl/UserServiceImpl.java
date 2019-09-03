@@ -6,7 +6,7 @@ import cn.hutool.core.lang.Validator;
 import com.aswkj.admin.api.common.constant.CacheNameConstant;
 import com.aswkj.admin.api.common.constant.Constants;
 import com.aswkj.admin.api.common.enums.MediaStoreTypeEnum;
-import com.aswkj.admin.api.common.enums.UserStatusEnum;
+import com.aswkj.admin.api.module.pms.enums.UserStatusEnum;
 import com.aswkj.admin.api.common.model.LocalStoreModel;
 import com.aswkj.admin.api.common.service.LocalFileUploadService;
 import com.aswkj.admin.api.config.exception.CustomException;

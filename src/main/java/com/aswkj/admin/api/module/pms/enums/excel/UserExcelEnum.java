@@ -1,21 +1,21 @@
-package com.aswkj.admin.api.common.enums.excel;
+package com.aswkj.admin.api.module.pms.enums.excel;
 
 import com.aswkj.admin.api.common.enums.StandardEnumInterface;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum UserExcelEnum implements StandardEnumInterface {
 
-  username("username", "登陆账号", "auto"),
-  name("name", "昵称", "auto"),
-  roleCnNames("roleCnNames", "角色名称", "auto"),
-  status("status", "状态", "auto"),
-  gender("gender", "性别", "auto"),
-  birthday("birthday", "生日", "auto"),
-  mobile("mobile", "手机号码", "auto"),
-  email("email", "邮箱", "auto"),
-  description("description", "描述", "10"),
-  createTime("createTime", "创建时间", "auto"),
-  lastLoginTime("lastLoginTime", "最后登陆时间", "auto"),
+  USERNAME("username", "登陆账号", "auto"),
+  NAME("name", "昵称", "auto"),
+  ROLE_CN_NAMES("roleCnNames", "角色名称", "auto"),
+  STATUS("status", "状态", "auto"),
+  GENDER("gender", "性别", "auto"),
+  BIRTHDAY("birthday", "生日", "auto"),
+  MOBILE("mobile", "手机号码", "auto"),
+  EMAIL("email", "邮箱", "auto"),
+  DESCRIPTION("description", "描述", "10"),
+  CREATE_TIME("createTime", "创建时间", "auto"),
+  LAST_LOGIN_TIME("lastLoginTime", "最后登陆时间", "auto"),
   ;
 
 

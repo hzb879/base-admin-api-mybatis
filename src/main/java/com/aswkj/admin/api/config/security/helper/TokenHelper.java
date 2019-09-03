@@ -1,6 +1,6 @@
 package com.aswkj.admin.api.config.security.helper;
 
-import com.aswkj.admin.api.common.enums.UserStatusEnum;
+import com.aswkj.admin.api.module.pms.enums.UserStatusEnum;
 import com.aswkj.admin.api.config.exception.UserStatusException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

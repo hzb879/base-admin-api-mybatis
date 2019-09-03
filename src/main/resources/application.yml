@@ -36,7 +36,6 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  type-enums-package: com.aswkj.admin.api.common.enums
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
 #  type-aliases-package: com.aswkj.admin.api.module.*.entity

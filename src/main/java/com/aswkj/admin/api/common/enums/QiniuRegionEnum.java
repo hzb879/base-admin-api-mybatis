@@ -3,7 +3,7 @@ package com.aswkj.admin.api.common.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * 性别枚举
+ * 七牛存储区域枚举
  *
  * @author hzb
  */

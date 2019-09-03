@@ -1,6 +1,5 @@
 package com.aswkj.admin.api.common.response;
 
-import com.aswkj.admin.api.common.enums.ResponseMsgEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

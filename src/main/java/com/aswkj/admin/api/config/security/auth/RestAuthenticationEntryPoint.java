@@ -4,7 +4,7 @@ package com.aswkj.admin.api.config.security.auth;
  * Created by fan.jin on 2016-11-12.
  */
 
-import com.aswkj.admin.api.common.enums.ResponseMsgEnum;
+import com.aswkj.admin.api.common.response.ResponseMsgEnum;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.util.HttpUtil;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -1,7 +1,7 @@
 package com.aswkj.admin.api.config.security.auth;
 
 import cn.hutool.core.util.StrUtil;
-import com.aswkj.admin.api.common.enums.ResponseMsgEnum;
+import com.aswkj.admin.api.common.response.ResponseMsgEnum;
 import com.aswkj.admin.api.common.response.ResponseData;
 import com.aswkj.admin.api.config.exception.UserStatusException;
 import com.aswkj.admin.api.config.security.helper.TokenHelper;

@@ -1,7 +1,7 @@
 package com.aswkj.admin.api.module.pms.model;
 
-import com.aswkj.admin.api.common.enums.GenderEnum;
-import com.aswkj.admin.api.common.enums.UserStatusEnum;
+import com.aswkj.admin.api.module.pms.enums.GenderEnum;
+import com.aswkj.admin.api.module.pms.enums.UserStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

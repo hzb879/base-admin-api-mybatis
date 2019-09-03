@@ -11,6 +11,7 @@ import com.aswkj.admin.api.util.MybatisPlusQueryUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author hzb
  * @since 2019-08-09
  */
+@Api(tags = "1.0.0", value = "角色管理")
 @RestController
 @RequestMapping("/pms/role")
 @PreAuthorize("hasRole('admin')")

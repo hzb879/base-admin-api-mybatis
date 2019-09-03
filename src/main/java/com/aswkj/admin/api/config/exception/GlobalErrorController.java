@@ -21,17 +21,17 @@ import java.util.Objects;
 public class GlobalErrorController implements ErrorController {
 
 //	private static final String ERROR_VIEW = "common/error";
-	
-	private final static String ERROR_PATH = "/error";
 
-	private static final Logger logger = LoggerFactory
-            .getLogger(GlobalErrorController.class);
-    
-    /**
-     * Error Attributes in the Application
-     */
-    @Autowired
-    private ErrorAttributes errorAttributes;
+  private final static String ERROR_PATH = "/error";
+
+  private static final Logger logger = LoggerFactory
+          .getLogger(GlobalErrorController.class);
+
+  /**
+   * Error Attributes in the Application
+   */
+  @Autowired
+  private ErrorAttributes errorAttributes;
 
 //    /**
 //     * Supports the HTML Error View
@@ -43,47 +43,47 @@ public class GlobalErrorController implements ErrorController {
 //    		return new ModelAndView(ERROR_VIEW, this.getErrorAttributes(request, false));
 //    }
 
-    /**
-     * Supports other formats like JSON, XML
-     *
-     * @param request
-     */
-    @RequestMapping(value = ERROR_PATH)
-    @ResponseBody
-    public ResponseData<Map<String, Object>> error(
-            HttpServletRequest request) {
-        Map<String, Object> body = this.getErrorAttributes(request,
-                this.getTraceParameter(request));
-        return new ResponseData<Map<String, Object>>(this.getStatus(request).value(), body.get("message").toString(), body);
-    }
+  /**
+   * Supports other formats like JSON, XML
+   *
+   * @param request
+   */
+  @RequestMapping(value = ERROR_PATH)
+  @ResponseBody
+  public ResponseData<Map<String, Object>> error(
+          HttpServletRequest request) {
+    Map<String, Object> body = this.getErrorAttributes(request,
+            this.getTraceParameter(request));
+    return new ResponseData<Map<String, Object>>(this.getStatus(request).value(), body.get("message").toString(), body);
+  }
 
-    @Override
-    public String getErrorPath() {
-        return ERROR_PATH;
-    }
+  @Override
+  public String getErrorPath() {
+    return ERROR_PATH;
+  }
 
-    private boolean getTraceParameter(HttpServletRequest request) {
-        String parameter = request.getParameter("trace");
-        if (Objects.isNull(parameter)) {
-            return false;
-        }
-        return !"false".equals(parameter.toLowerCase());
+  private boolean getTraceParameter(HttpServletRequest request) {
+    String parameter = request.getParameter("trace");
+    if (Objects.isNull(parameter)) {
+      return false;
     }
+    return !"false".equals(parameter.toLowerCase());
+  }
 
-    private Map<String, Object> getErrorAttributes(HttpServletRequest request,
-                                                   boolean includeStackTrace) {
-        Map<String, Object> map = this.errorAttributes
-                .getErrorAttributes(new ServletWebRequest(request), includeStackTrace);
-        logger.error("map is [{}]", map);
-        return map;
-    }
+  private Map<String, Object> getErrorAttributes(HttpServletRequest request,
+                                                 boolean includeStackTrace) {
+    Map<String, Object> map = this.errorAttributes
+            .getErrorAttributes(new ServletWebRequest(request), includeStackTrace);
+    logger.error("map is [{}]", map);
+    return map;
+  }
 
-    private HttpStatus getStatus(HttpServletRequest request) {
-        Integer statusCode = (Integer) request
-                .getAttribute("javax.servlet.error.status_code");
-        if (statusCode != null) {
-            return HttpStatus.valueOf(statusCode);
-        }
-        return HttpStatus.INTERNAL_SERVER_ERROR;
+  private HttpStatus getStatus(HttpServletRequest request) {
+    Integer statusCode = (Integer) request
+            .getAttribute("javax.servlet.error.status_code");
+    if (statusCode != null) {
+      return HttpStatus.valueOf(statusCode);
     }
+    return HttpStatus.INTERNAL_SERVER_ERROR;
+  }
 }

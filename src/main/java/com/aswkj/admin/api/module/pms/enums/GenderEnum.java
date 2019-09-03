@@ -1,5 +1,6 @@
-package com.aswkj.admin.api.common.enums;
+package com.aswkj.admin.api.module.pms.enums;
 
+import com.aswkj.admin.api.common.enums.StandardEnumInterface;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
